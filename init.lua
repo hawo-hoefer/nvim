@@ -65,7 +65,6 @@ vim.lsp.config('*', {
     }
   }
 })
-vim.lsp.enable({ "lua_ls", "rust-analyzer", "texlab", "clangd" })
 
 vim.api.nvim_set_hl(0, "@env_cmd.latex", { link = "keyword" })
 vim.api.nvim_set_hl(0, "@section.latex", { link = "keyword" })
@@ -78,3 +77,12 @@ vim.api.nvim_command("sign define LspDiagnosticsSignError text=\\ ☠")
 vim.api.nvim_command("sign define LspDiagnosticsSignWarning text=⚠")
 vim.api.nvim_command("sign define LspDiagnosticsSignInformation text=ⓘ")
 vim.api.nvim_command("sign define lspLspDiagnosticsSignHint text=⚐")
+
+local lsp_names = { "lua_ls", "rust-analyzer", "texlab", "clangd", "pyright" }
+
+vim.lsp.enable(lsp_names)
+
+vim.api.nvim_create_user_command("LspRestart", function()
+  vim.lsp.enable(lsp_names, false)
+  vim.lsp.enable(lsp_names, true)
+end, {})
