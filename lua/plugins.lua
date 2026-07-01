@@ -40,14 +40,6 @@ require('lazy').setup {
 
   -- LSP-y / Language specific stuff
   'vhdirk/vim-cmake',
-  {
-    'ThePrimeagen/refactoring.nvim',
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter"
-    }
-  },
-
   { 'inkarkat/vim-SpellCheck',      dependencies = { 'inkarkat/vim-ingo-library' } },
 
   { "hrsh7th/nvim-cmp",
@@ -103,8 +95,62 @@ require('lazy').setup {
   { 'theHamsta/nvim-dap-virtual-text',             dependencies = { "mfussenegger/nvim-dap" } },
 
   { 'nvim-treesitter/nvim-treesitter',             build = ":TSUpdate",                                 config = require('config.treesitter').config },
-  { 'nvim-treesitter/nvim-treesitter-refactor',    dependencies = { 'nvim-treesitter/nvim-treesitter' } },
-  { 'nvim-treesitter/nvim-treesitter-textobjects', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', dependencies = { 'nvim-treesitter/nvim-treesitter' }, config = function() 
+    require('nvim-treesitter-textobjects').setup {
+	    select = {
+		    enable = true,
+		    lookahead = true,
+		    keymaps = {
+			    ["ab"] = "@block.outer",
+			    ["ib"] = "@block.inner",
+			    ["af"] = "@function.outer",
+			    ["if"] = "@function.inner",
+			    ["aC"] = "@class.outer",
+			    ["iC"] = "@class.inner",
+			    ["aK"] = "@comment.outer",
+			    ["ai"] = "@conditional.outer",
+			    ["ii"] = "@conditional.inner",
+			    ["ac"] = "@call.outer",
+			    ["ic"] = "@call.inner",
+			    ["al"] = "@loop.outer",
+			    ["il"] = "@loop.inner",
+			    ["iP"] = "@parameter.inter",
+			    ["aP"] = "@parameter.outer",
+			    ["aS"] = "@statement.outer",
+		    }
+	    },
+	    swap = {
+		    enable = true,
+		    swap_next = {
+			    ["<leader>s"] = "@parameter.inner",
+		    },
+		    swap_previous = {
+			    ["<leader>S"] = "@parameter.inner",
+		    }
+	    },
+	    move = {
+		    enable = true,
+		    set_jumps = true,
+		    goto_next_start = {
+			    ["]m"] = "@function.outer",
+			    ["]]"] = "@class.outer",
+		    },
+		    goto_next_end = {
+			    ["]M"] = "@function.outer",
+			    ["]["] = "@class.outer",
+		    },
+		    goto_previous_start = {
+			    ["[m"] = "@function.outer",
+			    ["[["] = "@class.outer",
+		    },
+		    goto_previous_end = {
+			    ["[M"] = "@function.outer",
+			    ["[]"] = "@class.outer",
+		    },
+	    },
+    }
+    end
+  },
   {
     'danymat/neogen',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },

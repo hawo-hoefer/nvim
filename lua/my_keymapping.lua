@@ -155,8 +155,6 @@ require('legendary').setup {
       require('my_funcs').todos_qflist()
     end },
 
-    { '<leader>F',  require('refactoring').select_refactor, mode = 'v', desc = "refactoring" },
-
     -- -- Create dot / neato Graph
     -- { '<leader>gd', function() graphviz_graph("dot") end },
     -- { '<leader>gn', function() graphviz_graph("neato") end },
